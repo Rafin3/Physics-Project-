@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coulomb Force Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+          font-family: Arial, sans-serif;
+          font-weight: bold;
+          padding: 20px;
+          background-color: #007bff;
+          color: white;
+          border-radius: 10px;
+          width: 50%;
+          margin: 20px auto;
+          text-align: center;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        .object {
+            width: 100px;
+            height: 100px;
+            background-color: #4caf50;
+            border-radius: 50%;
+            position: absolute;
+            top: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 18px;
+        }
+        #object1 {
+            left: 50px;
+        }
+        #object2 {
+            right: 50px;
+        }
+        .line {
+            position: absolute;
+            top: 210px; /* Adjusted position for space below objects */
+            height: 2px;
+            background-color: #000;
+            display: none;
+        }
+        .line::before, .line::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid #000;
+            border-right: 2px solid #000;
+            transform: rotate(45deg);
+        }
+        .line::before {
+            left: -5px;
+            transform: rotate(-135deg); /* Flip the left arrow */
+        }
+        .line::after {
+            right: -5px;
+        }
+        .distance-label {
+            position: absolute;
+            top: 220px; /* Adjusted position for distance label */
+            font-size: 14px;
+            display: none;
+        }
+        .input-container {
+            margin: 20px;
+        }
+        input {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0066D3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+        }
+        .fraction {
+            display: inline-block;
+            text-align: center;
+        }
+        .fraction .numerator {
+            border-bottom: 1px solid #000;
+            display: block;
+        }
+        .fraction .denominator {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Coulomb Force Calculator</h1>
+    <div class="container">
+        <div class="object" id="object1"><span style="font-size: 150%">q₁</span></div>
+        <div class="object" id="object2"><span style="font-size: 150%">q₂</span></div>
+        <div class="line" id="line"></div>
+        <div class="distance-label" id="distance-label"></div>
+    </div>
+    <div class="input-container">
+        <input type="number" id="mass1" placeholder="Charge of Object 1(C)">
+        <input type="number" id="mass2" placeholder="Charge of Object 2(C)">
+        <input type="number" id="distance" placeholder="Distance(m)">
+    </div>
+    <button onclick="calculateForce()"><b>Calculate Coulomb Force</b></button>
+    <div class="result" id="result"></div>
+
+    <script>
+        function calculateForce() {
+            const k = 9e9; // Coulomb constant (m^3 C^-1 s^-2)
+            const mass1 = parseFloat(document.getElementById('mass1').value);
+            const mass2 = parseFloat(document.getElementById('mass2').value);
+            const distance = parseFloat(document.getElementById('distance').value);
+
+            if (isNaN(mass1) || isNaN(mass2) || isNaN(distance) || distance <= 0) {
+                document.getElementById('result').innerText = 'Please enter valid positive numbers.';
+                return;
+            }
+
+            // Calculate force
+            const force = (k * mass1 * mass2) / (distance * distance);
+            const numerator = k * mass1 * mass2;
+            const denominator = distance ** 2;
+
+            // Update the object circles with the mass values
+            document.getElementById('object1').innerText = `${mass1} C`;
+            document.getElementById('object2').innerText = `${mass2} C`;
+
+            // Update the line and distance label
+            const line = document.getElementById('line');
+            const distanceLabel = document.getElementById('distance-label');
+            
+            // Set the correct position of the line and label
+            const object1 = document.getElementById('object1');
+            const object2 = document.getElementById('object2');
+            const lineWidth = Math.abs(object2.offsetLeft - object1.offsetLeft) + object2.offsetWidth - object1.offsetWidth;
+            
+            line.style.width = `${lineWidth}px`; // Make the line span across the entire distance between the objects
+            line.style.left = `${object1.offsetLeft + object1.offsetWidth / 2 - 1}px`;  // Start from the center of object1
+            line.style.display = 'block';
+
+            distanceLabel.innerText = `${distance} m`;
+            distanceLabel.style.left = `${(object1.offsetLeft + object2.offsetLeft + object2.offsetWidth) / 2}px`; // Centered between objects
+            distanceLabel.style.transform = 'translateX(-50%)';
+            distanceLabel.style.fontSize = '150%';
+            distanceLabel.style.display = 'block';
+
+            // Steps for showing calculation
+            const steps = [
+                // Step 1: Formula (without N)
+                `F<sub>C</sub> = <div class="fraction">
+                    <span class="numerator">kq₁q₂</span>
+                    <span class="denominator">d²</span>
+                </div>`,
+                // Step 2: Substitute values (with N)
+                `F<sub>C</sub> = <div class="fraction">
+                    <span class="numerator">(9 × 10<sup>9</sup>) × (${mass1}) × (${mass2})</span>
+                    <span class="denominator">(${distance})²</span>
+                </div> N`,
+               // Step 3: Final result (with N)
+`F<sub>C</sub> = ${force.toExponential(2).replace(/e([+-]?\d+)/g, match => {
+    const power = match.replace("e", "");
+    return ` × 10<sup>${power.startsWith('+') ? power.substring(1) : power}</sup>`;
+})} N`
+            ];
+
+            displayResult(steps);
+        }
+
+        function displayResult(steps) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            let index = 0;
+
+            function displayStep() {
+                if (index < steps.length) {
+                    const step = document.createElement('div');
+                    step.innerHTML = steps[index];
+                    resultDiv.appendChild(step);
+                    index++;
+                    setTimeout(displayStep, 1000);
+                }
+            }
+
+            displayStep();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            padding: 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 10px;
+            width: 50%;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 20px; /* gap between buttons */
+            margin-top: 20px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        button {
+            width: 100%;
+            height: 150px;
+            font-size: 24px;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0066D3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Physics Calculator</h1>
+    <div class="container">
+        <div class="button-container">
+            <button onclick="goToGravitationalForce()"><b>Gravitational Force</b></button>
+            <button onclick="goToCoulombForce()"><b>Coulomb Force</b></button>
+            <button onclick="goToGravitationalAcceleration()"><b>Gravitational Acceleration</b></button>
+            <button onclick="goToKineticEnergy()"><b>Equivalent Resistance</b></button>
+            <button onclick="goToPotentialEnergy()"><b>Potential Energy</b></button>
+            <button onclick="goToWorkDone()"><b>Kinetic Energy </b></button>
+            <button onclick="goToMomentum()"><b>Momentum</b></button>
+            <button onclick="goToPressure()"><b>Pressure</b></button>
+            <button onclick="goToPower()"><b>Power</b></button>
+        </div>
+    </div>
+
+    <script>
+        function goToGravitationalForce() {
+            window.location.href = 'gravitational-force.html'; 
+        }
+
+        function goToCoulombForce() {
+            window.location.href = 'coulomb-force.html'; 
+        }
+
+        function goToGravitationalAcceleration() {
+            window.location.href = 'gravitational-acceleration.html'; 
+        }
+
+        function goToKineticEnergy() {
+            window.location.href = 'kinetic-energy.html'; 
+        }
+
+        function goToPotentialEnergy() {
+            window.location.href = 'potential-energy.html'; 
+        }
+
+        function goToWorkDone() {
+            window.location.href = 'work-done.html'; 
+        }
+
+        function goToMomentum() {
+            window.location.href = 'momentum.html'; 
+        }
+
+        function goToPressure() {
+            window.location.href = 'pressure.html'; 
+        }
+
+        function goToPower() {
+            window.location.href = 'power.html'; 
+        }
+    </script>
+</body>
+</html>
